@@ -96,7 +96,7 @@ class engine:
 			if (mix > 95 and altitude > 1000):
 				self.mixtureDamage += sec
 
-	def getData(self,flightTime):
+	def getData(self):
 		return "&mixture"+str(self.engineNumber+1)+"="+str(self.mixtureDamage)+"&heat"+str(self.engineNumber+1)+"="+str(self.chtDamage)+"&time"+str(self.engineNumber+1)+"="+str(self.runtime)
 
 	def isEngRun(self):
