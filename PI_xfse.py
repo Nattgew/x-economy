@@ -97,7 +97,7 @@ class engine:
 				self.mixtureDamage += sec
 
 	def getData(self,flightTime):
-		return "&mixture"+str(self.engineNumber+1)+"="+str(self.mixtureDamage)+"&heat"+str(self.engineNumber+1)+"="+str(self.chtDamage)+"&time"+str(self.engineNumber+1)+"="+str(flightTime)
+		return "&mixture"+str(self.engineNumber+1)+"="+str(self.mixtureDamage)+"&heat"+str(self.engineNumber+1)+"="+str(self.chtDamage)+"&time"+str(self.engineNumber+1)+"="+str(self.runtime)
 
 	def isEngRun(self):
 		_engrun = []
@@ -809,6 +809,8 @@ class PythonInterface:
 
 		if self.flying==1:
 			
+			elapsed=self.flightTimer-self.flightTimerLast
+			
 			if _groundcompression>1:
 				self.gsCheat+=1
 
@@ -918,7 +920,7 @@ class PythonInterface:
 				# engine feed only when flying: pre-heat recommended on ground
 				for iengfeed in range(self.NumberOfEngines):
 					#sec,rpm,mix,cht,altitude):
-					self.ACEngine[iengfeed].feed(1,self.ACEngine[iengfeed].currentRPM(),self.ACEngine[iengfeed].currentMIX(),self.ACEngine[iengfeed].currentCHT(),self.ACEngine[iengfeed].planeALT(),self.ACEngine[iengfeed].engineType(),self.ACEngine[iengfeed].currentITT())
+					self.ACEngine[iengfeed].feed(elapsed,self.ACEngine[iengfeed].currentRPM(),self.ACEngine[iengfeed].currentMIX(),self.ACEngine[iengfeed].currentCHT(),self.ACEngine[iengfeed].planeALT(),self.ACEngine[iengfeed].engineType(),self.ACEngine[iengfeed].currentITT())
 
 			# arrive
 			else:
@@ -1203,7 +1205,7 @@ class PythonInterface:
 
 				_engineStr=""
 				for _ieng in range(self.NumberOfEngines):
-					_engineStr=_engineStr+str(self.ACEngine[_ieng].getData(self.flightTime))
+					_engineStr=_engineStr+str(self.ACEngine[_ieng].getData())
 					
 				print "[XFSE|Nfo] Engine conditions: "+_engineStr
 
