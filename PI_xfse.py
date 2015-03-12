@@ -73,6 +73,8 @@ class engine:
 		return _planeALT*float(3.33)
 
 	def feed(self,sec,rpm,mix,cht,altitude,type,itt):
+		if rpm>0:
+			self.runtime+=sec
 		if type == 2 or type == 8: #Turboprop
 			if itt > self.max_ITT:
 				_diff=itt-self.max_ITT
@@ -86,8 +88,6 @@ class engine:
 			if mix > 0.25 and altitude < 1000: #Low altitude contamination
 				self.mixtureDamage += 0.25
 		else: #Reciprocating or other gets old method as default
-			if rpm>0:
-				self.runtime+=sec
 			if self.defaultcht>0:
 				_diff=abs(cht-self.defaultcht)/float(sec)
 				if _diff>0:
